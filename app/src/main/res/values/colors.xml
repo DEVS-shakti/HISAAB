@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="background">#FFECEFF1</color>
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="text_primary">#FF212121</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="accent">#FF6200EE</color>
+
+    <color name="day_paid">#FF4CAF50</color>
+    <color name="day_paid_end">#FF66BB6A</color>
+    <color name="day_unpaid">#FFF44336</color>
+    <color name="day_unpaid_end">#FFEF5350</color>
+    <color name="day_not_taken">#FFFFCDD2</color>
+    <color name="day_not_taken_end">#FFFFEBEE</color>
+    <color name="day_no_entry">#FFFFFFFF</color>
+    <color name="day_no_entry_stroke">#FFE0E0E0</color>
+    <color name="day_future">#FFF5F5F5</color>
+    <color name="day_today_stroke">#FF2196F3</color>
+
+    <color name="home_bg">#FFF5F6FA</color>
+    <color name="home_card">#FFFFFFFF</color>
+    <color name="home_text_primary">#FF1E1E2D</color>
+    <color name="home_text_secondary">#FF6B7280</color>
+    <color name="home_text_muted">#FF9CA3AF</color>
+    <color name="home_accent">#FF6C5CE7</color>
+    <color name="home_accent_light">#FFA29BFE</color>
+
+    <color name="milk_bg">#FFECEFF1</color>
+    <color name="milk_container">#FFFAFAFA</color>
+    <color name="milk_toolbar_start">#FF6200EA</color>
+    <color name="milk_toolbar_end">#FF7C4DFF</color>
+</resources>
