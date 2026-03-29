@@ -7,122 +7,206 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_summary_pill" />
 
         <TextView
             android:id="@+id/tvDialogDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:text="2026-03-14"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:textColor="@color/text_primary"
-            android:layout_marginBottom="12dp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Milk taken?"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
+            android:layout_marginTop="24dp"
+            android:text="Milk Taken?"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/rgTaken"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rbTakenYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yes" />
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_toggle_neutral"
+                android:button="@null"
+                android:gravity="center"
+                android:text="YES"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbTakenNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="No" />
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_toggle_neutral"
+                android:button="@null"
+                android:gravity="center"
+                android:text="NO"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
         </RadioGroup>
 
         <LinearLayout
             android:id="@+id/layoutTakenFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity (liters)"
+                android:text="Quantity (Liters)"
                 android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etQuantity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_secondary"
+                android:gravity="center_vertical"
                 android:hint="0.5"
-                android:layout_marginTop="6dp" />
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Amount (Rs)"
                 android:textColor="@color/text_primary"
-                android:textStyle="bold"
-                android:layout_marginTop="12dp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etAmount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_secondary"
+                android:gravity="center_vertical"
                 android:hint="0"
-                android:layout_marginTop="6dp" />
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Payment status"
+                android:layout_marginTop="20dp"
+                android:text="Payment Status"
                 android:textColor="@color/text_primary"
-                android:textStyle="bold"
-                android:layout_marginTop="12dp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/rgPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rbPaid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Paid" />
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_toggle_neutral"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Paid"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/rbUnpaid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_toggle_neutral"
+                    android:button="@null"
+                    android:gravity="center"
                     android:text="Unpaid"
-                    android:layout_marginStart="16dp" />
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
             </RadioGroup>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnDeleteEntry"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="16dp"
-            android:text="Delete entry"
-            android:background="@drawable/bg_button_danger"
-            android:textColor="#FFD32F2F"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelEntry"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_secondary"
+                android:maxLines="1"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/text_secondary"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDeleteEntry"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_danger"
+                android:maxLines="1"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textColor="@color/status_unpaid"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSaveEntry"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_primary"
+                android:maxLines="1"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

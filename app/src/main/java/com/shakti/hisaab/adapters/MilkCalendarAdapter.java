@@ -16,6 +16,7 @@ import com.shakti.hisaab.R;
 import com.shakti.hisaab.model.CalendarDay;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapter.DayViewHolder> {
 
@@ -51,6 +52,7 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
             holder.viewStatusDot.setVisibility(View.GONE);
             holder.itemView.setBackground(null);
             holder.itemView.setOnClickListener(null);
+            holder.itemView.setElevation(0f);
             return;
         }
 
@@ -59,31 +61,37 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
 
         switch (day.state) {
             case PAID:
-                holder.tvStatus.setText("✓");
+                holder.tvStatus.setText("\u2713");
                 holder.tvQuantity.setText(formatQuantity(day.quantity));
                 holder.tvStatus.setVisibility(View.VISIBLE);
                 holder.tvQuantity.setVisibility(View.VISIBLE);
                 holder.viewStatusDot.setVisibility(View.VISIBLE);
-                holder.viewStatusDot.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.day_paid));
+                holder.viewStatusDot.setBackgroundTintList(
+                        ContextCompat.getColorStateList(context, R.color.day_paid)
+                );
                 setTextColors(holder, context, android.R.color.white);
                 break;
             case UNPAID:
-                holder.tvStatus.setText("✕");
+                holder.tvStatus.setText("\u2715");
                 holder.tvQuantity.setText(formatQuantity(day.quantity));
                 holder.tvStatus.setVisibility(View.VISIBLE);
                 holder.tvQuantity.setVisibility(View.VISIBLE);
                 holder.viewStatusDot.setVisibility(View.VISIBLE);
-                holder.viewStatusDot.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.day_unpaid));
+                holder.viewStatusDot.setBackgroundTintList(
+                        ContextCompat.getColorStateList(context, R.color.day_unpaid)
+                );
                 setTextColors(holder, context, android.R.color.white);
                 break;
             case NOT_TAKEN:
-                holder.tvStatus.setText("–");
+                holder.tvStatus.setText("-");
                 holder.tvQuantity.setText("");
                 holder.tvStatus.setVisibility(View.VISIBLE);
                 holder.tvQuantity.setVisibility(View.GONE);
                 holder.viewStatusDot.setVisibility(View.VISIBLE);
-                holder.viewStatusDot.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.day_not_taken));
-                setTextColors(holder, context, R.color.text_primary);
+                holder.viewStatusDot.setBackgroundTintList(
+                        ContextCompat.getColorStateList(context, R.color.day_not_taken)
+                );
+                setTextColors(holder, context, R.color.status_unpaid);
                 break;
             case NO_ENTRY:
                 holder.tvStatus.setText("");
@@ -99,7 +107,7 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
                 holder.tvStatus.setVisibility(View.GONE);
                 holder.tvQuantity.setVisibility(View.GONE);
                 holder.viewStatusDot.setVisibility(View.GONE);
-                setTextColors(holder, context, R.color.text_secondary);
+                setTextColors(holder, context, R.color.text_muted);
                 break;
             default:
                 break;
@@ -116,8 +124,8 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
         }
 
         float elevation = (day.state == CalendarDay.State.PAID || day.state == CalendarDay.State.UNPAID)
-                ? dpToPx(context, 2)
-                : dpToPx(context, 0.5f);
+                ? dpToPx(context, 3f)
+                : 0f;
         holder.itemView.setElevation(elevation);
     }
 
@@ -180,7 +188,7 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
 
         if (day.isToday) {
             int todayStroke = ContextCompat.getColor(context, R.color.day_today_stroke);
-            drawable.setStroke((int) dpToPx(context, 2), todayStroke);
+            drawable.setStroke((int) dpToPx(context, 3), todayStroke);
         }
 
         holder.itemView.setBackground(drawable);
@@ -198,13 +206,17 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
             return "";
         }
         if (quantity == Math.floor(quantity)) {
-            return String.format("%.0fL", quantity);
+            return String.format(Locale.getDefault(), "%.0fL", quantity);
         }
-        return String.format("%.1fL", quantity);
+        return String.format(Locale.getDefault(), "%.1fL", quantity);
     }
 
     private float dpToPx(Context context, float dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+        return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                context.getResources().getDisplayMetrics()
+        );
     }
 
     public static class DayViewHolder extends RecyclerView.ViewHolder {
@@ -222,3 +234,4 @@ public class MilkCalendarAdapter extends RecyclerView.Adapter<MilkCalendarAdapte
         }
     }
 }
+

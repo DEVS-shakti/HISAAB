@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/milk_bg">
+    android:background="@color/milk_bg"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_toolbar"
+        android:elevation="6dp"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:elevation="4dp">
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="16dp">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/bg_toolbar_btn"
-            android:src="@android:drawable/ic_menu_revert"
-            android:tint="@android:color/white" />
-
-        <TextView
-            android:id="@+id/tvToolbarTitle"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="&#x1F95B; Milk Calendar"
-            android:textColor="@android:color/white"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.02"
-            android:gravity="center" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_toolbar_btn"
+                android:contentDescription="Back"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_back_small"
+                android:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="&#x1F95B; Milk Calendar"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnSettings"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:background="@drawable/bg_toolbar_btn"
+            android:contentDescription="Settings"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="10dp"
+            android:scaleType="centerInside"
             android:src="@drawable/setting"
             android:tint="@android:color/white" />
     </LinearLayout>
@@ -53,390 +73,427 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/milk_container"
-            android:padding="12dp">
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:background="@drawable/bg_card_light"
-                android:padding="10dp"
-                android:elevation="2dp">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/color_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
 
-                <ImageButton
-                    android:id="@+id/btnPrev"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/bg_nav_button"
-                    android:src="@android:drawable/ic_media_rew"
-                    android:tint="@color/accent"/>
-
-                <TextView
-                    android:id="@+id/tvMonth"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="March 2026"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
 
-                <ImageButton
-                    android:id="@+id/btnNext"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_media_ff"
-                    android:background="@drawable/bg_nav_button"
-                    android:tint="@color/accent" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/btnPrev"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_nav_button"
+                        android:contentDescription="Previous month"
+                        android:gravity="center"
+                        android:text="&#x2039;"
+                        android:textColor="@color/category_default"
+                        android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                    <TextView
+                        android:id="@+id/tvMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="March 2026"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <TextView style="@style/dayHeader" android:text="Sun"/>
-                <TextView style="@style/dayHeader" android:text="Mon"/>
-                <TextView style="@style/dayHeader" android:text="Tue"/>
-                <TextView style="@style/dayHeader" android:text="Wed"/>
-                <TextView style="@style/dayHeader" android:text="Thu"/>
-                <TextView style="@style/dayHeader" android:text="Fri"/>
-                <TextView style="@style/dayHeader" android:text="Sat"/>
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/btnNext"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_nav_button"
+                        android:contentDescription="Next month"
+                        android:gravity="center"
+                        android:text="&#x203A;"
+                        android:textColor="@color/category_default"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_card_light"
-                android:padding="8dp"
-                android:elevation="2dp">
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+                <TextView style="@style/dayHeader" android:text="Sun" />
+                <TextView style="@style/dayHeader" android:text="Mon" />
+                <TextView style="@style/dayHeader" android:text="Tue" />
+                <TextView style="@style/dayHeader" android:text="Wed" />
+                <TextView style="@style/dayHeader" android:text="Thu" />
+                <TextView style="@style/dayHeader" android:text="Fri" />
+                <TextView style="@style/dayHeader" android:text="Sat" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/color_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/calendarRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp"
-                    android:padding="2dp"
+                    android:layout_height="372dp"
                     android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false" />
-            </LinearLayout>
+                    android:nestedScrollingEnabled="false"
+                    android:padding="6dp" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_card_light"
-                android:padding="16dp"
                 android:layout_marginTop="12dp"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="&#x1F4CA; Legend"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    android:letterSpacing="0.06"
-                    android:layout_marginBottom="12dp" />
+                app:cardBackgroundColor="@color/color_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="&#x1F4CA; Legend"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical">
 
-                        <View
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/legend_paid" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Paid and taken"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
-                        <View
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/legend_unpaid" />
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/legend_paid" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:maxLines="1"
+                                    android:text="Paid &amp; Taken"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/legend_unpaid" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:maxLines="1"
+                                    android:text="Unpaid &amp; Taken"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Unpaid and taken"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/legend_not_taken" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:maxLines="1"
+                                    android:text="Not Taken"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/legend_no_entry" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:maxLines="1"
+                                    android:text="No Entry"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/legend_not_taken" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Not taken"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/legend_no_entry" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="No entry"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_card_light"
-                android:padding="16dp"
                 android:layout_marginTop="12dp"
-                android:elevation="3dp">
-
-                <TextView
-                    android:id="@+id/tvSummaryTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="March 2026 Summary"
-                    android:textColor="@color/accent"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:letterSpacing="0.1"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="12dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#FFF3E5F5"
-                    android:layout_marginBottom="14dp" />
+                app:cardBackgroundColor="@color/color_card"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvSummaryTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="March 2026 Summary"
+                        android:textAllCaps="true"
+                        android:textColor="@color/category_default"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/category_default_bg" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:background="@drawable/bg_stat_box">
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="&#x1F4C5;"
-                            android:textSize="22sp"
-                            android:layout_marginBottom="4dp" />
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_stat_box"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Days taken"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:textAllCaps="true"
-                            android:letterSpacing="0.06" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="&#x1F4C5;"
+                                android:textSize="24sp" />
 
-                        <TextView
-                            android:id="@+id/tvDaysTaken"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Days Taken"
+                                android:textAllCaps="true"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvDaysTaken"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:maxLines="1"
+                                android:text="0"
+                                android:textColor="@color/category_default"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="0"
-                            android:textColor="@color/accent"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginTop="4dp"
-                            android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeMaxTextSize="20sp"
-                            android:autoSizeStepGranularity="1sp"
-                            android:maxLines="1" />
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_stat_box"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="&#x1F95B;"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Total Liters"
+                                android:textAllCaps="true"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvTotalLiters"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:maxLines="1"
+                                android:text="0 L"
+                                android:textColor="@color/category_default"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_stat_box"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="&#x1F4B0;"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Amount Spent"
+                                android:textAllCaps="true"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvTotalAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:maxLines="1"
+                                android:text="Rs 0"
+                                android:textColor="@color/category_default"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
+                    <Button
+                        android:id="@+id/btnAddToday"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_button_primary"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_stat_box">
+                        android:maxLines="1"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:text="+ Add Today's Milk Entry"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="&#x1F95B;"
-                            android:textSize="22sp"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total liters"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:textAllCaps="true"
-                            android:letterSpacing="0.06" />
-
-                        <TextView
-                            android:id="@+id/tvTotalLiters"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0 L"
-                            android:textColor="@color/accent"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginTop="4dp"
-                            android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeMaxTextSize="20sp"
-                            android:autoSizeStepGranularity="1sp"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
+                    <Button
+                        android:id="@+id/btnViewEntries"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_button_secondary"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_stat_box">
+                        android:maxLines="1"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:text="View All Entries"
+                        android:textAllCaps="false"
+                        android:textColor="@color/category_default"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="&#x1F4B0;"
-                            android:textSize="22sp"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Amount spent"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:textAllCaps="true"
-                            android:letterSpacing="0.06" />
-
-                        <TextView
-                            android:id="@+id/tvTotalAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rs 0"
-                            android:textColor="@color/accent"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginTop="4dp"
-                            android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeMaxTextSize="20sp"
-                            android:autoSizeStepGranularity="1sp"
-                            android:maxLines="1" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btnClearAll"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_button_danger"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:text="Clear All Data"
+                        android:textAllCaps="false"
+                        android:textColor="@color/status_unpaid"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnAddToday"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
-                    android:text="&#xFF0B; Add Today's Milk Entry"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.04"
-                    android:background="@drawable/bg_button_primary" />
-
-                <Button
-                    android:id="@+id/btnViewEntries"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="10dp"
-                    android:text="&#x1F4CB; View All Entries"
-                    android:textColor="@color/accent"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.04"
-                    android:background="@drawable/bg_button_secondary" />
-
-                <Button
-                    android:id="@+id/btnClearAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="10dp"
-                    android:text="&#x1F5D1; Clear All Data"
-                    android:textColor="#FFD32F2F"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.04"
-                    android:background="@drawable/bg_button_danger" />
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

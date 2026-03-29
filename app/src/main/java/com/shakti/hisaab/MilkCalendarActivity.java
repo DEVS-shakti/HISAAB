@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -17,12 +16,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.shakti.hisaab.adapters.MilkCalendarAdapter;
 import com.shakti.hisaab.adapters.MilkEntryListAdapter;
 import com.shakti.hisaab.database.AppDatabase;
@@ -56,13 +57,13 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
     private TextView tvDaysTaken;
     private TextView tvTotalLiters;
     private TextView tvTotalAmount;
-    private ImageButton btnPrev;
-    private ImageButton btnNext;
+    private TextView btnPrev;
+    private TextView btnNext;
     private ImageButton btnBack;
     private ImageButton btnSettings;
-    private Button btnAddToday;
-    private Button btnViewEntries;
-    private Button btnClearAll;
+    private View btnAddToday;
+    private View btnViewEntries;
+    private View btnClearAll;
 
     private MilkCalendarAdapter adapter;
     private List<MilkEntry> monthEntries = new ArrayList<>();
@@ -243,41 +244,14 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         RadioGroup rgPayment = view.findViewById(R.id.rgPayment);
         RadioButton rbPaid = view.findViewById(R.id.rbPaid);
         RadioButton rbUnpaid = view.findViewById(R.id.rbUnpaid);
-        Button btnDelete = view.findViewById(R.id.btnDeleteEntry);
+        View btnDelete = view.findViewById(R.id.btnDeleteEntry);
+        View btnCancel = view.findViewById(R.id.btnCancelEntry);
+        View btnSave = view.findViewById(R.id.btnSaveEntry);
 
-        tvDialogDate.setText(date.toString());
+        tvDialogDate.setText(date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.getDefault())));
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .setPositiveButton("Save", null)
-                .setNegativeButton("Cancel", (d, which) -> d.dismiss())
-                .create();
-
-        dialog.setOnShowListener(d -> {
-            Button saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            saveButton.setOnClickListener(v -> {
-                boolean taken = rbTakenYes.isChecked();
-                double quantity = parseDouble(etQuantity.getText().toString(), defaultQuantity);
-                double amount = parseDouble(etAmount.getText().toString(), quantity * milkRate);
-                boolean paid = rbPaid.isChecked();
-
-                MilkEntry entry;
-                if (taken) {
-                    entry = new MilkEntry(date.toString(), true, paid, quantity, milkRate, amount);
-                } else {
-                    entry = new MilkEntry(date.toString(), false, false, 0, milkRate, 0);
-                }
-
-                dbExecutor.execute(() -> {
-                    milkEntryDao.insert(entry);
-                    runOnUiThread(() -> {
-                        dialog.dismiss();
-                        loadMonthData();
-                        Toast.makeText(this, "Entry saved", Toast.LENGTH_SHORT).show();
-                    });
-                });
-            });
-        });
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(view);
 
         rgTaken.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbTakenYes) {
@@ -285,6 +259,7 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
             } else {
                 layoutTakenFields.setVisibility(View.GONE);
             }
+            updateTakenToggleStyles(rbTakenYes, rbTakenNo);
         });
 
         etQuantity.addTextChangedListener(new TextWatcher() {
@@ -300,6 +275,34 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
                 double amount = quantity * milkRate;
                 etAmount.setText(String.format(Locale.getDefault(), "%.0f", amount));
             }
+        });
+
+        rgPayment.setOnCheckedChangeListener((group, checkedId) ->
+                updatePaymentToggleStyles(rbPaid, rbUnpaid));
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        btnSave.setOnClickListener(v -> {
+            boolean taken = rbTakenYes.isChecked();
+            double quantity = parseDouble(etQuantity.getText().toString(), defaultQuantity);
+            double amount = parseDouble(etAmount.getText().toString(), quantity * milkRate);
+            boolean paid = rbPaid.isChecked();
+
+            MilkEntry entry;
+            if (taken) {
+                entry = new MilkEntry(date.toString(), true, paid, quantity, milkRate, amount);
+            } else {
+                entry = new MilkEntry(date.toString(), false, false, 0, milkRate, 0);
+            }
+
+            dbExecutor.execute(() -> {
+                milkEntryDao.insert(entry);
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    loadMonthData();
+                    Toast.makeText(this, "Entry saved", Toast.LENGTH_SHORT).show();
+                });
+            });
         });
 
         btnDelete.setOnClickListener(v -> {
@@ -335,6 +338,7 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
                         } else {
                             rbUnpaid.setChecked(true);
                         }
+                        updatePaymentToggleStyles(rbPaid, rbUnpaid);
                     } else {
                         rbTakenNo.setChecked(true);
                         layoutTakenFields.setVisibility(View.GONE);
@@ -346,6 +350,8 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
                     etAmount.setText(String.format(Locale.getDefault(), "%.0f", defaultQuantity * milkRate));
                     rbPaid.setChecked(true);
                 }
+                updateTakenToggleStyles(rbTakenYes, rbTakenNo);
+                updatePaymentToggleStyles(rbPaid, rbUnpaid);
             });
         });
 
@@ -357,6 +363,7 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         TextView tvTitle = view.findViewById(R.id.tvEntriesTitle);
         TextView tvNoEntries = view.findViewById(R.id.tvNoEntries);
         RecyclerView rvEntries = view.findViewById(R.id.rvEntries);
+        View btnClose = view.findViewById(R.id.btnCloseEntries);
 
         tvTitle.setText(currentMonth.format(monthFormatter) + " Entries");
         rvEntries.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
@@ -367,10 +374,8 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
             tvNoEntries.setVisibility(View.GONE);
         }
 
-        AlertDialog entriesDialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .setPositiveButton("Close", (d, which) -> d.dismiss())
-                .create();
+        BottomSheetDialog entriesDialog = new BottomSheetDialog(this);
+        entriesDialog.setContentView(view);
 
         MilkEntryListAdapter listAdapter = new MilkEntryListAdapter(monthEntries, entry -> {
             entriesDialog.dismiss();
@@ -378,6 +383,7 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         });
         rvEntries.setAdapter(listAdapter);
 
+        btnClose.setOnClickListener(v -> entriesDialog.dismiss());
         entriesDialog.show();
     }
 
@@ -385,20 +391,24 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_settings, null);
         EditText etMilkRate = view.findViewById(R.id.etMilkRate);
         EditText etDefaultQuantity = view.findViewById(R.id.etDefaultQuantity);
+        View btnCancel = view.findViewById(R.id.btnCancelSettings);
+        View btnSave = view.findViewById(R.id.btnSaveSettings);
 
         etMilkRate.setText(String.valueOf(milkRate));
         etDefaultQuantity.setText(String.valueOf(defaultQuantity));
 
-        new AlertDialog.Builder(this)
-                .setView(view)
-                .setPositiveButton("Save", (d, which) -> {
-                    milkRate = parseDouble(etMilkRate.getText().toString(), milkRate);
-                    defaultQuantity = parseDouble(etDefaultQuantity.getText().toString(), defaultQuantity);
-                    saveSettings();
-                    Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(view);
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnSave.setOnClickListener(v -> {
+            milkRate = parseDouble(etMilkRate.getText().toString(), milkRate);
+            defaultQuantity = parseDouble(etDefaultQuantity.getText().toString(), defaultQuantity);
+            saveSettings();
+            dialog.dismiss();
+            Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
+        });
+        dialog.show();
     }
 
     private void confirmClearAll() {
@@ -440,7 +450,23 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         }
     }
 
-    private static class Summary {
+    private void updateTakenToggleStyles(RadioButton yes, RadioButton no) {
+        yes.setBackgroundResource(yes.isChecked() ? R.drawable.bg_toggle_positive : R.drawable.bg_toggle_neutral);
+        yes.setTextColor(ContextCompat.getColor(this, yes.isChecked() ? R.color.day_paid : R.color.text_primary));
+
+        no.setBackgroundResource(no.isChecked() ? R.drawable.bg_toggle_negative : R.drawable.bg_toggle_neutral);
+        no.setTextColor(ContextCompat.getColor(this, no.isChecked() ? R.color.day_unpaid : R.color.text_primary));
+    }
+
+    private void updatePaymentToggleStyles(RadioButton paid, RadioButton unpaid) {
+        paid.setBackgroundResource(paid.isChecked() ? R.drawable.bg_toggle_positive : R.drawable.bg_toggle_neutral);
+        paid.setTextColor(ContextCompat.getColor(this, paid.isChecked() ? R.color.day_paid : R.color.text_primary));
+
+        unpaid.setBackgroundResource(unpaid.isChecked() ? R.drawable.bg_toggle_negative : R.drawable.bg_toggle_neutral);
+        unpaid.setTextColor(ContextCompat.getColor(this, unpaid.isChecked() ? R.color.day_unpaid : R.color.text_primary));
+    }
+
+    private class Summary {
         final int daysTaken;
         final String totalLiters;
         final String totalAmount;
@@ -448,7 +474,15 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         Summary(int daysTaken, double liters, double amount) {
             this.daysTaken = daysTaken;
             this.totalLiters = String.format(Locale.getDefault(), "%.1f L", liters);
-            this.totalAmount = String.format(Locale.getDefault(), "Rs %.0f", amount);
+            this.totalAmount = AppPreferences.formatAmount(MilkCalendarActivity.this, amount);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbExecutor != null) {
+            dbExecutor.shutdown();
         }
     }
 }

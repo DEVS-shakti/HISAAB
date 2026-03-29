@@ -3,46 +3,117 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_summary_pill" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:text="Settings"
-        android:textStyle="bold"
-        android:textSize="16sp"
         android:textColor="@color/text_primary"
-        android:layout_marginBottom="12dp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Milk rate per liter (Rs)"
-        android:textStyle="bold"
-        android:textColor="@color/text_primary" />
+        android:layout_marginTop="6dp"
+        android:layout_gravity="center_horizontal"
+        android:text="My Hissab all set"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
 
-    <EditText
-        android:id="@+id/etMilkRate"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="50"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_button_secondary"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milk Rate Per Liter (Rs)"
+            android:textColor="@color/category_default"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etMilkRate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="50"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Default quantity (liters)"
-        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:text="Default Quantity (Liters)"
         android:textColor="@color/text_primary"
-        android:layout_marginTop="12dp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etDefaultQuantity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_button_secondary"
+        android:gravity="center_vertical"
         android:hint="0.5"
-        android:layout_marginTop="6dp" />
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelSettings"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_secondary"
+            android:maxLines="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/text_secondary"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_primary"
+            android:maxLines="1"
+            android:text="Save Settings"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

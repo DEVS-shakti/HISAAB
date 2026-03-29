@@ -5,9 +5,39 @@
 
     <color name="background">#FFECEFF1</color>
     <color name="card_background">#FFFFFFFF</color>
-    <color name="text_primary">#FF212121</color>
-    <color name="text_secondary">#FF757575</color>
+    <color name="text_primary">#FF1E1E2D</color>
+    <color name="text_secondary">#FF6B7280</color>
     <color name="accent">#FF6200EE</color>
+
+    <!-- Universal design system -->
+    <color name="bg_app">#FFF5F6FA</color>
+    <color name="color_card">#FFFFFFFF</color>
+    <color name="status_paid">#FF10B981</color>
+    <color name="status_paid_bg">#FFD1FAE5</color>
+    <color name="status_unpaid">#FFEF4444</color>
+    <color name="status_unpaid_bg">#FFFEE2E2</color>
+    <color name="text_muted">#FF9CA3AF</color>
+    <color name="divider">#FFECEEEF</color>
+    <color name="primary">#FF6200EA</color>
+    <color name="primary_light">#FF7C4DFF</color>
+    <color name="primary_bg">#FFF3E5F5</color>
+    <color name="danger">#FFEF4444</color>
+    <color name="alert_dot">#FFFF8A80</color>
+
+    <!-- Category dynamic colors -->
+    <color name="category_default">#FF6200EA</color>
+    <color name="category_rent">#FF5C6BC0</color>
+    <color name="category_electricity">#FFFBC02D</color>
+    <color name="category_groceries">#FF66BB6A</color>
+    <color name="category_travel">#FF42A5F5</color>
+    <color name="category_vegetables">#FF8BC34A</color>
+    <color name="category_default_bg">#FFF3E5F5</color>
+    <color name="category_rent_bg">#FFE8EAF6</color>
+    <color name="category_electricity_bg">#FFFFF9C4</color>
+    <color name="category_groceries_bg">#FFE8F5E9</color>
+    <color name="category_travel_bg">#FFE3F2FD</color>
+    <color name="category_vegetables_bg">#FFF1F8E9</color>
+    <color name="milk_toggle_positive_bg">#FFE8F5E9</color>
 
     <color name="day_paid">#FF4CAF50</color>
     <color name="day_paid_end">#FF66BB6A</color>
@@ -32,4 +62,6 @@
     <color name="milk_container">#FFFAFAFA</color>
     <color name="milk_toolbar_start">#FF6200EA</color>
     <color name="milk_toolbar_end">#FF7C4DFF</color>
+
+    <color name="toolbar_btn_bg">#1AFFFFFF</color>
 </resources>
