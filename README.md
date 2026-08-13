@@ -119,9 +119,10 @@ Instead of keeping financial records scattered across notes or spreadsheets, HIS
 
       Click the Run ▶ button or press Shift + F10.
 
-## 📁Project Structure
+## 📁 Project Structure
 
-   HISAAB/
+```text
+HISAAB/
 ├── app/
 │   ├── src/main/
 │   │   ├── java/com/hisaab/       # App Logic (Activities, ViewModels, Room DB)
@@ -130,17 +131,26 @@ Instead of keeping financial records scattered across notes or spreadsheets, HIS
 │   │   └── AndroidManifest.xml    # App Permissions & Manifest
 ├── build.gradle                   # Dependency & Plugin Settings
 └── README.md                      # Project Documentation
+```
 
 ## 🤝 Contributing
 
 Contributions make the open-source community an incredible place to learn, inspire, and create. Any contributions you make are greatly appreciated.
-   1.Fork the Project
-   2.Create your Feature Branch (git checkout -b feature/AmazingFeature)
-   3.Commit your Changes (git commit -m 'Add some AmazingFeature')
-   4.Push to the Branch (git push origin feature/AmazingFeature)
-   5.Open a Pull Request
 
-   
+1.Fork the Project
+
+2.Create your Feature Branch (git checkout -b feature/AmazingFeature)
+
+3.Commit your Changes (git commit -m 'Add some AmazingFeature')
+
+4.Push to the Branch (git push origin feature/AmazingFeature)
+
+5.Open a Pull Request
+
 ## 🌟 Why HISAAB?
 
-Managing personal finances doesn't need to be complicated. HISAAB turns raw financial entries into clear, actionable information through a simple interface, organized records, and real-time visual analytics.Repository: DEVS-shakti/HISAABIf you find HISAAB useful, please give it a ⭐ Star to show your support!
+Managing personal finances doesn't need to be complicated. HISAAB turns raw financial entries into clear, actionable information through a simple interface, organized records, and real-time visual analytics.
+
+Repository: `DEVS-shakti/HISAAB`
+
+If you find HISAAB useful, please give it a ⭐ Star to show your support!
