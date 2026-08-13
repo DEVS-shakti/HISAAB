@@ -1,0 +1,14 @@
+# Build & Cache Directories
+.gradle/
+.gradle-user/
+build/
+**/build/
+
+# Local configuration files (contains local paths/passwords)
+local.properties
+
+# IDE settings
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
