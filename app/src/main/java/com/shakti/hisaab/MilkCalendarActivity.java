@@ -79,9 +79,18 @@ public class MilkCalendarActivity extends AppCompatActivity implements MilkCalen
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_milk_calendar);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (insetsView, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            insetsView.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            
+            View toolbar = findViewById(R.id.layoutToolbar);
+            if (toolbar != null) {
+                toolbar.setPadding(toolbar.getPaddingLeft(), 
+                        systemBars.top, 
+                        toolbar.getPaddingRight(), 
+                        toolbar.getPaddingBottom());
+            }
+            
             return insets;
         });
 

@@ -39,6 +39,9 @@ public interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE dateMillis BETWEEN :startMillis AND :endMillis ORDER BY dateMillis DESC")
     LiveData<List<Expense>> getExpensesBetween(long startMillis, long endMillis);
 
+    @Query("SELECT * FROM expenses ORDER BY dateMillis DESC")
+    LiveData<List<Expense>> getAllExpenses();
+
     @Query("SELECT * FROM expenses ORDER BY dateMillis DESC LIMIT :limit")
     LiveData<List<Expense>> getRecentExpenses(int limit);
 
