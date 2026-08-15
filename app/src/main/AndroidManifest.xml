@@ -16,6 +16,15 @@
         android:theme="@style/Theme.HISAAB"
         tools:targetApi="31">
         <activity
+            android:name=".BudgetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BudgetHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BudgetInsightsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MilkCalendarActivity"
             android:exported="false" />
         <activity

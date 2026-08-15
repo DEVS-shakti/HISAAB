@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.shakti.hisaab.database.entities.Budget;
 import com.shakti.hisaab.database.entities.Expense;
+import com.shakti.hisaab.database.repository.BudgetRepository;
 import com.shakti.hisaab.database.repository.ExpenseRepository;
 import com.shakti.hisaab.model.CategoryTotal;
 
@@ -14,10 +16,20 @@ import java.util.List;
 
 public class ExpenseViewModel extends AndroidViewModel {
     private final ExpenseRepository repository;
+    private final BudgetRepository budgetRepository;
 
     public ExpenseViewModel(@NonNull Application application) {
         super(application);
         repository = new ExpenseRepository(application);
+        budgetRepository = new BudgetRepository(application);
+    }
+
+    public LiveData<Budget> getBudgetForMonth(String month) {
+        return budgetRepository.getBudgetForMonth(month);
+    }
+
+    public void setBudget(String month, int year, double amount) {
+        budgetRepository.setBudget(month, year, amount);
     }
 
     public void insert(Expense expense) {
@@ -50,6 +62,10 @@ public class ExpenseViewModel extends AndroidViewModel {
 
     public LiveData<List<Expense>> getExpensesBetween(long startMillis, long endMillis) {
         return repository.getExpensesBetween(startMillis, endMillis);
+    }
+
+    public LiveData<List<Expense>> getAllExpenses() {
+        return repository.getAllExpenses();
     }
 
     public LiveData<List<Expense>> getRecentExpenses(int limit) {

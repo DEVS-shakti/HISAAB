@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -52,7 +53,19 @@ public class CategoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category_detail);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            
+            View toolbarContainer = findViewById(R.id.toolbarContainer);
+            toolbarContainer.setPadding(toolbarContainer.getPaddingLeft(), 
+                    systemBars.top, 
+                    toolbarContainer.getPaddingRight(), 
+                    toolbarContainer.getPaddingBottom());
+            
+            // Adjust toolbar height to include status bar
+            ViewGroup.LayoutParams lp = toolbarContainer.getLayoutParams();
+            lp.height = dpToPx(56) + systemBars.top;
+            toolbarContainer.setLayoutParams(lp);
+            
             return insets;
         });
 
@@ -222,5 +235,10 @@ public class CategoryDetailActivity extends AppCompatActivity {
             selectedDateMillis = picked.getTimeInMillis();
             etDate.setText(dateFormat.format(selectedDateMillis));
         }, year, month, day).show();
+    }
+
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 }

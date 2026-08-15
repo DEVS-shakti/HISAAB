@@ -26,17 +26,36 @@
 
     <!-- Category dynamic colors -->
     <color name="category_default">#FF6200EA</color>
+    <color name="category_milk">#FF6200EA</color>
     <color name="category_rent">#FF5C6BC0</color>
     <color name="category_electricity">#FFFBC02D</color>
     <color name="category_groceries">#FF66BB6A</color>
     <color name="category_travel">#FF42A5F5</color>
     <color name="category_vegetables">#FF8BC34A</color>
+    <color name="category_food">#FFFF7043</color>
+    <color name="category_shopping">#FFEC407A</color>
+    <color name="category_bills">#FF78909C</color>
+    <color name="category_entertainment">#FFAB47BC</color>
+    <color name="category_health">#FFE57373</color>
+    <color name="category_education">#FF1E88E5</color>
+    <color name="category_salary">#FF00C853</color>
+    <color name="category_gift">#FFFFD600</color>
+
     <color name="category_default_bg">#FFF3E5F5</color>
+    <color name="category_milk_bg">#FFF3E5F5</color>
     <color name="category_rent_bg">#FFE8EAF6</color>
     <color name="category_electricity_bg">#FFFFF9C4</color>
     <color name="category_groceries_bg">#FFE8F5E9</color>
     <color name="category_travel_bg">#FFE3F2FD</color>
     <color name="category_vegetables_bg">#FFF1F8E9</color>
+    <color name="category_food_bg">#FFFBE9E7</color>
+    <color name="category_shopping_bg">#FFFCE4EC</color>
+    <color name="category_bills_bg">#FFECEFF1</color>
+    <color name="category_entertainment_bg">#FFF3E5F5</color>
+    <color name="category_health_bg">#FFFFEBEE</color>
+    <color name="category_education_bg">#FFE3F2FD</color>
+    <color name="category_salary_bg">#FFE8F5E9</color>
+    <color name="category_gift_bg">#FFFFFDE7</color>
     <color name="milk_toggle_positive_bg">#FFE8F5E9</color>
 
     <color name="day_paid">#FF4CAF50</color>
@@ -64,4 +83,9 @@
     <color name="milk_toolbar_end">#FF7C4DFF</color>
 
     <color name="toolbar_btn_bg">#1AFFFFFF</color>
+    <color name="hero_expense_start">#176FE9</color>
+    <color name="hero_expense_end">#42A5FF</color>
+    <color name="hero_budget_start">#139B63</color>
+    <color name="hero_budget_end">#39C982</color>
+    <color name="indicator_inactive">#D1D5DB</color>
 </resources>

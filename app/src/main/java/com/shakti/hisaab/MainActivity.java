@@ -38,12 +38,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.shakti.hisaab.adapters.CategoryAdapter;
+import com.shakti.hisaab.adapters.HeroPagerAdapter;
 import com.shakti.hisaab.adapters.RecentActivityAdapter;
 import com.shakti.hisaab.backup.AppBackupManager;
+import com.shakti.hisaab.database.entities.Budget;
 import com.shakti.hisaab.database.entities.Expense;
 import com.shakti.hisaab.model.CategoryItem;
 import com.shakti.hisaab.reminder.ReminderScheduler;
@@ -101,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvToolbarTitle;
     private TextView btnThemeToggle;
     private TextView tvGreetingText;
-    private TextView tvHeroLabel;
-    private TextView tvHeroAmount;
-    private TextView tvUnpaidDues;
+    private ViewPager2 heroViewPager;
+    private View viewIndicatorExpense;
+    private View viewIndicatorBudget;
+    private HeroPagerAdapter heroPagerAdapter;
+    
     private TextView tvCurrentMonth;
     private TextView tvReportTotal;
     private TextView tvSummaryPaid;
@@ -148,7 +154,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            
+            View toolbar = findViewById(R.id.layoutToolbar);
+            toolbar.setPadding(toolbar.getPaddingLeft(), 
+                    systemBars.top, 
+                    toolbar.getPaddingRight(), 
+                    toolbar.getPaddingBottom());
+            
             return insets;
         });
 
@@ -186,9 +199,10 @@ public class MainActivity extends AppCompatActivity {
         tvToolbarTitle = findViewById(R.id.tvToolbarTitle);
         btnThemeToggle = findViewById(R.id.btnThemeToggle);
         tvGreetingText = findViewById(R.id.tvGreetingText);
-        tvHeroLabel = findViewById(R.id.tvHeroLabel);
-        tvHeroAmount = findViewById(R.id.tvHeroAmount);
-        tvUnpaidDues = findViewById(R.id.tvUnpaidDues);
+        heroViewPager = findViewById(R.id.heroViewPager);
+        viewIndicatorExpense = findViewById(R.id.indicatorExpense);
+        viewIndicatorBudget = findViewById(R.id.indicatorBudget);
+        
         tvCurrentMonth = findViewById(R.id.tvCurrentMonth);
         tvReportTotal = findViewById(R.id.tvReportTotal);
         tvSummaryPaid = findViewById(R.id.tvSummaryPaid);
@@ -227,6 +241,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupHomeScreen() {
+        heroPagerAdapter = new HeroPagerAdapter(new HeroPagerAdapter.OnHeroActionListener() {
+            @Override
+            public void onSeeReports() {
+                switchScreen(Screen.REPORTS);
+            }
+
+            @Override
+            public void onManageBudget() {
+                startActivity(new Intent(MainActivity.this, BudgetActivity.class));
+            }
+        });
+        heroViewPager.setAdapter(heroPagerAdapter);
+        heroViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                updateIndicators(position);
+            }
+        });
+
         RecyclerView rvCategories = findViewById(R.id.rvCategories);
         rvCategories.setLayoutManager(new GridLayoutManager(this, 2));
         categoryAdapter = new CategoryAdapter(categoryItems, this::openCategory);
@@ -296,10 +329,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void observeStaticData() {
         viewModel.getRecentExpenses(5).observe(this, recentActivityAdapter::setItems);
-        viewModel.getTotalUnpaidSum().observe(this, total -> {
-            double unpaid = total == null ? 0 : total;
-            tvUnpaidDues.setText(AppPreferences.formatAmount(this, unpaid) + " Unpaid Dues");
-        });
     }
 
     private void observeSelectedMonth() {
@@ -311,8 +340,6 @@ public class MainActivity extends AppCompatActivity {
         selectedMonthExpensesLiveData = viewModel.getExpensesBetween(start, end);
         selectedMonthExpensesLiveData.observe(this, selectedMonthObserver);
         tvCurrentMonth.setText(formatMonth(selectedMonth));
-        tvHeroLabel.setText("Total Spend (" + selectedMonth.getMonth().name().substring(0, 1)
-                + selectedMonth.getMonth().name().substring(1).toLowerCase(Locale.getDefault()) + ")");
     }
 
     private void observeTrendData() {
@@ -352,6 +379,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateIndicators(int position) {
+        viewIndicatorExpense.setBackgroundResource(position == 0 ? R.drawable.indicator_active : R.drawable.indicator_inactive_dot);
+        viewIndicatorBudget.setBackgroundResource(position == 1 ? R.drawable.indicator_active : R.drawable.indicator_inactive_dot);
+
+        ViewGroup.LayoutParams lpExpense = viewIndicatorExpense.getLayoutParams();
+        lpExpense.width = dp(position == 0 ? 16 : 6);
+        viewIndicatorExpense.setLayoutParams(lpExpense);
+
+        ViewGroup.LayoutParams lpBudget = viewIndicatorBudget.getLayoutParams();
+        lpBudget.width = dp(position == 1 ? 16 : 6);
+        viewIndicatorBudget.setLayoutParams(lpBudget);
+    }
+
     private void renderSelectedMonth(List<Expense> expenses) {
         List<Expense> safeExpenses = expenses == null ? Collections.emptyList() : expenses;
         double total = 0;
@@ -366,7 +406,55 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        tvHeroAmount.setText(AppPreferences.formatAmount(this, total));
+        final double finalTotal = total;
+        String monthName = selectedMonth.getMonth().name().substring(0, 1) + 
+                selectedMonth.getMonth().name().substring(1).toLowerCase();
+        String expenseLabel = "TOTAL SPEND (" + monthName.toUpperCase() + ")";
+        String amountStr = AppPreferences.formatAmount(this, finalTotal);
+        
+        // Use a flag or check if we are already observing
+        viewModel.getTotalUnpaidSum().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double unpaid) {
+                double safeUnpaid = unpaid == null ? 0 : unpaid;
+                String unpaidStr = AppPreferences.formatAmount(MainActivity.this, safeUnpaid) + " Unpaid Dues";
+                heroPagerAdapter.setExpenseData(expenseLabel, amountStr, unpaidStr);
+                // Remove self after one update to avoid leaks in this method
+                viewModel.getTotalUnpaidSum().removeObserver(this);
+            }
+        });
+
+        viewModel.getBudgetForMonth(selectedMonth.toString()).observe(this, new Observer<Budget>() {
+            @Override
+            public void onChanged(Budget budget) {
+                String monthName = selectedMonth.getMonth().name();
+                String budgetLabel = "MONTHLY BUDGET · " + monthName.toUpperCase();
+                if (budget == null || budget.amount <= 0) {
+                    heroPagerAdapter.setBudgetData(budgetLabel, "Rs 0", "SET BUDGET", "Rs 0 spent", "Rs 0 budget", false);
+                } else {
+                    double remaining = budget.amount - finalTotal;
+                    String mainAmount;
+                    String statusLabel;
+                    boolean isOver = false;
+
+                    if (remaining < 0) {
+                        mainAmount = AppPreferences.formatAmount(MainActivity.this, Math.abs(remaining));
+                        statusLabel = "OVER BUDGET";
+                        isOver = true;
+                    } else {
+                        mainAmount = AppPreferences.formatAmount(MainActivity.this, remaining);
+                        statusLabel = "LEFT";
+                    }
+
+                    String spentStr = AppPreferences.formatAmount(MainActivity.this, finalTotal) + " spent";
+                    String totalStr = AppPreferences.formatAmount(MainActivity.this, budget.amount) + " budget";
+
+                    heroPagerAdapter.setBudgetData(budgetLabel, mainAmount, statusLabel, spentStr, totalStr, isOver);
+                }
+                viewModel.getBudgetForMonth(selectedMonth.toString()).removeObserver(this);
+            }
+        });
+
         tvReportTotal.setText(AppPreferences.formatAmount(this, total));
         tvSummaryPaid.setText("Paid\n" + AppPreferences.formatAmount(this, paid));
         tvSummaryPending.setText("Pending\n" + AppPreferences.formatAmount(this, pending));
@@ -733,6 +821,48 @@ public class MainActivity extends AppCompatActivity {
         return (getResources().getConfiguration().uiMode
                 & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                 == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    private void openManageBudgetDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_settings, null); // Reuse structure or create new
+        // Actually, the user asked for a specific design. I'll use a new layout or reuse dialog_settings if it fits.
+        // I'll create a new layout dialog_manage_budget.xml for clarity.
+        
+        View budgetView = LayoutInflater.from(this).inflate(R.layout.dialog_manage_budget, null);
+        dialog.setContentView(budgetView);
+        
+        TextView tvMonthTitle = budgetView.findViewById(R.id.tvBudgetMonthTitle);
+        EditText etAmount = budgetView.findViewById(R.id.etBudgetAmount);
+        MaterialButton btnCancel = budgetView.findViewById(R.id.btnCancelBudget);
+        MaterialButton btnSave = budgetView.findViewById(R.id.btnSaveBudget);
+        
+        String monthName = selectedMonth.getMonth().name().substring(0, 1) + 
+                selectedMonth.getMonth().name().substring(1).toLowerCase();
+        tvMonthTitle.setText(monthName + " " + selectedMonth.getYear());
+        
+        viewModel.getBudgetForMonth(selectedMonth.toString()).observe(this, budget -> {
+            if (budget != null && etAmount.getText().toString().isEmpty()) {
+                etAmount.setText(String.valueOf((int) budget.amount));
+            }
+        });
+        
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnSave.setOnClickListener(v -> {
+            String val = etAmount.getText().toString().trim();
+            if (!val.isEmpty()) {
+                try {
+                    double amount = Double.parseDouble(val);
+                    viewModel.setBudget(selectedMonth.toString(), selectedMonth.getYear(), amount);
+                    dialog.dismiss();
+                    toast("Budget updated");
+                } catch (Exception e) {
+                    etAmount.setError("Invalid amount");
+                }
+            }
+        });
+        
+        dialog.show();
     }
 
     private void confirmClearAll() {

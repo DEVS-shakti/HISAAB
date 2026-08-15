@@ -57,6 +57,10 @@ public class ExpenseRepository {
         return expenseDao.getExpensesBetween(startMillis, endMillis);
     }
 
+    public LiveData<List<Expense>> getAllExpenses() {
+        return expenseDao.getAllExpenses();
+    }
+
     public LiveData<List<Expense>> getRecentExpenses(int limit) {
         return expenseDao.getRecentExpenses(limit);
     }
