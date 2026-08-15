@@ -64,7 +64,7 @@ It brings expenses, budgets, bills, milk tracking, reports, insights, categories
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/a1761313-15b5-4132-92db-6ee554ae445e" width="22%" alt="Budget">
-  <img alt="budgetdash" src="https://github.com/user-attachments/assets/bace9b4a-f86d-46e7-b519-aca47efe8a43" />
+  <img src="https://github.com/user-attachments/assets/bace9b4a-f86d-46e7-b519-aca47efe8a43" />
   <img src="https://github.com/user-attachments/assets/e49171b0-68a9-4d9b-a388-edcd08ea7a76" width="22%" alt="Budget History">
   <img src="https://github.com/user-attachments/assets/6f7eda54-d700-42af-af33-0372f6ff2ecf" width="22%" alt="Budget Insights">
 </div>
